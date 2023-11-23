@@ -3,11 +3,17 @@ resource "kubernetes_namespace" "example" {
     annotations = var.annotations
     labels = var.labels
     name = var.name
+}
+}
 
-    labels = {
-      mylabel = "label-value"
+resource "kubernetes_resource_quota" "pod-limit" {
+  metadata {
+    name = "pod-limit"
+  }
+  spec {
+    hard = {
+      pods = 1000
     }
-
-    name = var.name
+    scopes = ["BestEffort"]
   }
 }
